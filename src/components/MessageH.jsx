@@ -2,7 +2,9 @@ import React from 'react'
 
 const MessageH = ({ message }) => {
     return (
-        <p className='bg-slate-50 border-solid border border-slate-200 rounded text-xs shadow-sm  p-4 m-4 '>Tu: {message}</p>
+        <div className='bg-slate-50 border-solid border border-slate-200 rounded p-4 mx-2 my-3 '>
+            <p className=' text-xs '><span className='font-bold'>Tu:</span> {message}</p>
+        </div>
     )
 }
 

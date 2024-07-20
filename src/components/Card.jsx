@@ -7,6 +7,7 @@ const Card = ({ nombre, tipo, direccion, descripcion, onClick }) => {
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
   };
+
   return (
     <div className=" rounded overflow-hidden shadow-md  shadow-[#B2F3BB] w-full h-fit cursor-pointer" onClick={onClick}>
       <div className="px-6 py-4">

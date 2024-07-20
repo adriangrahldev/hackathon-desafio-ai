@@ -1,6 +1,6 @@
 import { Textarea } from "@headlessui/react";
 import { useEffect, useState } from "react";
-import generateAi from "../utils/modelConfig.js";
+import { generateAi, queryChatGPTWithJsonData } from "../utils/modelConfig.js";
 import LoaderModal from "./LoaderModal.jsx";
 import Card from "./Card.jsx";
 import SendIcon from "./SendIcon.jsx";
@@ -24,13 +24,13 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler, setCenter }) => {
         setPrompt("");
 
         const response = await generateAi(prompt);
-        
+
         setPlaces(response)
         sethistory([...history, prompt])
 
-        if(!Array.isArray(response) || response.length === 0){
+        if (!Array.isArray(response) || response.length === 0) {
             setErrorHandler(true)
-        }else{
+        } else {
             setErrorHandler(false)
         }
 
@@ -45,7 +45,7 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler, setCenter }) => {
 
 
     useEffect(() => {
-      console.log('error', error)
+        console.log('error', error)
     }, [error])
 
     return (
@@ -53,7 +53,7 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler, setCenter }) => {
             <section className="p-2 my-5 h-full overflow-auto">
                 {history?.map(el => (<MessageH message={el} key={el} />))}
                 {error && <ErrorMsg message={"Podrias volver a intentar, recuerda ser claro y conciso"} />}
-                <section className="w-full grid grid-cols-2 mx-2 mb-2">
+                <section className="w-fit grid grid-cols-2 gap-2 mx-2">
                     {Array.isArray(locations) && locations.length > 0 && locations.map((card, index) => (
                         <Card
                             key={index}

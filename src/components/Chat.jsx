@@ -2,7 +2,7 @@ import { Textarea } from "@headlessui/react";
 import { useState } from "react";
 import generateAi from '../utils/modelConfig.js';
 
-const Chat = ({ setPlaces }) => {
+const Chat = ({ setPlaces, setOnload }) => {
 
     const [prompt, setPrompt] = useState("");
     const [messageSent, setMessageSent] = useState(false);
@@ -13,12 +13,15 @@ const Chat = ({ setPlaces }) => {
     };
 
     const handleSubmit = async (e) => {
+        setOnload(true)
         e.preventDefault();
         console.log(prompt);
         setPrompt("");
         setMessageSent(true);
         setPlaces(await generateAi(prompt))
+        setOnload(false)
     }
+
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {

@@ -11,7 +11,7 @@ const App = () => {
     <>
       <div className="w-full h-full m-0 p-3 bg-slate-50 flex">
         <MapComponent locations={places} className={`hidden`} />
-        <Chat setPlaces={setPlaces}/>
+        <Chat setPlaces={setPlaces} locations= {places}/>
       </div>
     </>
   );

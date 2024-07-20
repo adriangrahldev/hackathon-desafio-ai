@@ -8,20 +8,20 @@ const Card = ({ nombre, tipo, direccion, descripcion }) => {
     setIsExpanded(!isExpanded);
   };
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-md m-4 shadow-[#B2F3BB]">
+    <div className=" rounded overflow-hidden shadow-md  shadow-[#B2F3BB] w-full h-fit">
       <div className="px-6 py-4">
-        <div className="font-bold text-xl  text-[#41d655]">{nombre}</div>
-        <div className="font-bold text-sm mb-2 text-[#8ad494]">{tipo}</div>
-        <p className="text-gray-700 text-base">
+        <div className="font-bold text-sm  text-slate-500">{nombre}</div>
+        <div className="font-bold text-xs mb-2 text-slate-300">{tipo}</div>
+        <p className="text-gray-700 text-xs">
           {isExpanded ? descripcion : `${descripcion.slice(0, maxLength)}...`}
         </p>
         <button 
         onClick={handleToggle} 
-        className="text-blue-500 hover:underline text-sm"
+        className="text-blue-500 hover:underline text-xs"
       >
         {isExpanded ? 'Leer menos' : 'Leer más'}
       </button>
-        <p className="font-bold text-slate-700 text-sm mt-2">{direccion}</p>
+        <p className="font-bold text-slate-700 text-xs mt-2">{direccion}</p>
       </div>
     </div>
   );

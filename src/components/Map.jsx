@@ -14,12 +14,13 @@ const center = {
 
 const MapComponent = ({locations=[]}) => {
     return (
-      <div className="h-full w-4/5 rounded-md">
+      <div className="h-full w-3/5 rounded-md">
           <APIProvider
             apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
             onLoad={() => console.log("Maps API has loaded.")}
           >
               <Map
+                className=''
                 defaultZoom={13}
                 defaultCenter={center}
                 onCameraChanged={ev =>
@@ -99,9 +100,9 @@ const PoiMarkers = ({ locations = [] }) => {
           onClick={handleClick}
         >
           <Pin
-            background={'#FBBC04'}
-            glyphColor={'#1a70fd'}
-            borderColor={'#1a70fd'}
+            background={'#fb5252'}
+            glyphColor={'#b02a2a'}
+            borderColor={'#000000'}
           />
         </AdvancedMarker>
       ))}

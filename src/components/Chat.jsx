@@ -21,7 +21,6 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler, setCenter }) => {
     const handleSubmit = async (e) => {
         setOnload(true)
         e.preventDefault();
-        console.log(prompt);
         setPrompt("");
 
         const response = isJSON ? await queryChatGPTWithJsonData(prompt) : await generateAi(prompt);
@@ -46,9 +45,6 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler, setCenter }) => {
     }
 
 
-    useEffect(() => {
-        console.log('error', error)
-    }, [error])
 
     return (
         <div className='w-2/5 flex flex-col h-full'>

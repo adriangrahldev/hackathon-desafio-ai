@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-
+let cont = 0;
 import {
   AdvancedMarker,
   APIProvider,
@@ -13,7 +13,7 @@ import { Circle } from "./Circle.jsx";
 
 // import {main} from '../utils/modelConfig.js'
 
-const MapComponent = ({ locations = [], center, setCenter}) => {
+const MapComponent = ({ locations = [], center, setCenter }) => {
   return (
     <div className="h-full w-3/5 rounded-md">
       <APIProvider
@@ -88,10 +88,10 @@ const PoiMarkers = ({ locations = [] }) => {
         fillOpacity={0.3}
       />
       {Array.isArray(locations) && locations.length > 0 &&
-        locations.map((poi) => (
+        locations.map((poi,index) => (
           <AdvancedMarker
             title={poi.key}
-            key={poi.key}
+            key={index}
             position={poi.location}
             clickable={true}
             onClick={handleClick}

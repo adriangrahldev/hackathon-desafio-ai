@@ -37,7 +37,7 @@ const Chat = ({ setPlaces }) => {
     return (
         <div className='w-1/5 flex flex-col h-full'>
                 <section className="p-2 my-5 h-full">
-                    <LoaderModal isOpen={isLoading} text="Cargando" />
+                    <LoaderModal isOpen={true} text="Cargando" />
                 </section>
 
                 <form onSubmit={handleSubmit} className="flex items-center justify-end border-2 mx-2 border-slate-200 rounded-md">

@@ -12,6 +12,7 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
     const [prompt, setPrompt] = useState("");
     const [isLoading, setOnload] = useState(false);
     const [history, sethistory] = useState([])
+    const [isJSON, setIsJSON] = useState(false)
 
     const handleChange = (e) => {
         setPrompt(e.target.value);
@@ -23,7 +24,7 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
         console.log(prompt);
         setPrompt("");
 
-        const response = await generateAi(prompt);
+        const response = isJSON ? await queryChatGPTWithJsonData(prompt) : await generateAi(prompt);
 
         setPlaces(response)
         sethistory([...history, prompt])
@@ -36,6 +37,11 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
 
         setOnload(false)
     }
+
+    const handleToggle = () => {
+        setIsJSON(!isJSON)
+    };
+
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -51,6 +57,14 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
     return (
         <div className='w-2/5 flex flex-col h-full'>
             <section className="p-2 my-5 h-full overflow-auto">
+                <div>
+                    <button
+                        onClick={handleToggle}
+                        className="text-blue-400 hover:underline font-bold text-xs"
+                    >
+                        {isJSON ? 'ver con GPT4mini' : 'ver con JSON'}
+                    </button>
+                </div>
                 {history?.map(el => (<MessageH message={el} key={el} />))}
                 {error && <ErrorMsg message={"Podrias volver a intentar, recuerda ser claro y conciso"} />}
                 <section className="w-fit grid grid-cols-2 gap-2 mx-2">

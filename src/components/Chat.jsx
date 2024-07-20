@@ -33,12 +33,12 @@ const Chat = ({ setPlaces, locations }) => {
   };
 
   return (
-    <div className="w-1/5 flex flex-col h-full">
+    <div className="w-2/5 flex flex-col h-full">
       <section className="p-2 my-5 h-full">
         <LoaderModal isOpen={isLoading} text="Cargando" />
       </section>
 
-      <section className="w-full">
+      <section className="w-full grid grid-cols-2 mx-2 mb-2">
         {locations.map((card, index) => (
           <Card
             key={index}

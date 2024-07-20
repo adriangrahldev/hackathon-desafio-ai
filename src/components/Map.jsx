@@ -14,7 +14,7 @@ const center = {
 
 const MapComponent = ({locations=[]}) => {
     return (
-      <div className="h-full w-4/5 rounded-md">
+      <div className="h-full w-3/5 rounded-md">
           <APIProvider
             apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
             onLoad={() => console.log("Maps API has loaded.")}

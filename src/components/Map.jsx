@@ -97,7 +97,7 @@ const PoiMarkers = ({ locations = [] }) => {
         fillColor={"#3b82f6"}
         fillOpacity={0.3}
       />
-      {Array.isArray(locations) && locations.length>0 ?
+      {Array.isArray(locations) && locations.length > 0 ?
         locations.map((poi) => (
           <AdvancedMarker
             title={poi.key}

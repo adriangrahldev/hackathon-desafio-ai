@@ -6,6 +6,7 @@ const Chat = ({ setPlaces, setOnload }) => {
 
     const [prompt, setPrompt] = useState("");
     const [messageSent, setMessageSent] = useState(false);
+    const [response, setResponse] = useState([]);
 
     const handleChange = (e) => {
         setPrompt(e.target.value);
@@ -18,7 +19,9 @@ const Chat = ({ setPlaces, setOnload }) => {
         console.log(prompt);
         setPrompt("");
         setMessageSent(true);
-        setPlaces(await generateAi(prompt))
+        setResponse(await generateAi(prompt) || []);
+        setPlaces(response)
+        console.log(response)
         setOnload(false)
     }
 

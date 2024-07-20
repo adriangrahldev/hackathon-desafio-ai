@@ -8,7 +8,7 @@ const Card = ({ nombre, tipo, direccion, descripcion }) => {
     setIsExpanded(!isExpanded);
   };
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-md m-4 shadow-[#B2F3BB]">
+    <div className=" rounded overflow-hidden shadow-md  shadow-[#B2F3BB] w-full h-fit">
       <div className="px-6 py-4">
         <div className="font-bold text-xl  text-[#41d655]">{nombre}</div>
         <div className="font-bold text-sm mb-2 text-[#8ad494]">{tipo}</div>

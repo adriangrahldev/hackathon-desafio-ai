@@ -1,12 +1,11 @@
 import { Textarea } from "@headlessui/react";
 import { useState } from "react";
-import generateAi from "../utils/modelConfig.js";
 import LoaderModal from "./LoaderModal.jsx";
 import Card from "./Card.jsx";
 import SendIcon from "./SendIcon.jsx";
 import MessageH from "./MessageH.jsx";
 import ErrorMsg from "./ErrorMsg.jsx";
-
+import { generateAi, queryChatGPTWithJsonData } from "../utils/modelConfig.js";
 const Chat = ({ setPlaces, error, locations }) => {
 
     const [prompt, setPrompt] = useState("");
@@ -22,7 +21,7 @@ const Chat = ({ setPlaces, error, locations }) => {
         e.preventDefault();
         console.log(prompt);
         setPrompt("");
-        setPlaces(await generateAi(prompt))
+        setPlaces(await queryChatGPTWithJsonData(prompt))
         sethistory([...history, prompt])
         setOnload(false)
     }

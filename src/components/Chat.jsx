@@ -1,6 +1,6 @@
 import { Textarea } from "@headlessui/react";
 import { useEffect, useState } from "react";
-import generateAi from "../utils/modelConfig.js";
+import { generateAi, queryChatGPTWithJsonData } from "../utils/modelConfig.js";
 import LoaderModal from "./LoaderModal.jsx";
 import Card from "./Card.jsx";
 import SendIcon from "./SendIcon.jsx";
@@ -24,13 +24,13 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
         setPrompt("");
 
         const response = await generateAi(prompt);
-        
+
         setPlaces(response)
         sethistory([...history, prompt])
 
-        if(!Array.isArray(response) || response.length === 0){
+        if (!Array.isArray(response) || response.length === 0) {
             setErrorHandler(true)
-        }else{
+        } else {
             setErrorHandler(false)
         }
 
@@ -45,7 +45,7 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
 
 
     useEffect(() => {
-      console.log('error', error)
+        console.log('error', error)
     }, [error])
 
     return (

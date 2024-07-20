@@ -4,68 +4,70 @@ import generateAi from "../utils/modelConfig.js";
 import LoaderModal from "./LoaderModal.jsx";
 import Card from "./Card.jsx";
 import SendIcon from "./SendIcon.jsx";
+import MessageH from "./MessageH.jsx";
+import ErrorMsg from "./ErrorMsg.jsx";
 
-const Chat = ({ setPlaces, locations }) => {
-  const [prompt, setPrompt] = useState("");
-  const [messageSent, setMessageSent] = useState(false);
-  const [isLoading, setOnload] = useState(false);
+const Chat = ({ setPlaces, error, locations }) => {
 
-  const handleChange = (e) => {
-    setPrompt(e.target.value);
-    setMessageSent(false);
-  };
+    const [prompt, setPrompt] = useState("");
+    const [isLoading, setOnload] = useState(false);
+    const [history, sethistory] = useState([])
 
-  const handleSubmit = async (e) => {
-    setOnload(true);
-    e.preventDefault();
-    console.log(prompt);
-    setPrompt("");
-    setMessageSent(true);
-    setPlaces(await generateAi(prompt));
-    setOnload(false);
-  };
+    const handleChange = (e) => {
+        setPrompt(e.target.value);
+    };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit(e);
+    const handleSubmit = async (e) => {
+        setOnload(true)
+        e.preventDefault();
+        console.log(prompt);
+        setPrompt("");
+        setPlaces(await generateAi(prompt))
+        sethistory([...history, prompt])
+        setOnload(false)
     }
-  };
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e)
+        }
+    }
 
-  return (
-    <div className="w-1/5 flex flex-col h-full">
-      <section className="p-2 my-5 h-full">
-        <LoaderModal isOpen={isLoading} text="Cargando" />
-      </section>
 
-      <section className="w-full">
-        {locations.map((card, index) => (
-          <Card
-            key={index}
-            nombre={card.name}
-            tipo={card.type}
-            direccion={card.address}
-            descripcion={card.description}
-          />
-        ))}
-      </section>
-      <form
-        onSubmit={handleSubmit}
-        className="flex items-center justify-end border-2 mx-2 border-slate-200 rounded-md"
-      >
-        <Textarea
-          className="w-4/5 h-fit px-1 resize-none"
-          placeholder="Type a message..."
-          value={prompt}
-          onChange={handleChange}
-          onKeyDown={handleKeyPress}
-        />
-        <button className="w-auto h-10 mx-auto" type="submit">
-          <SendIcon></SendIcon>
-        </button>
-      </form>
-    </div>
-  );
+    return (
+        <div className='w-2/5 flex flex-col h-full'>
+            <section className="p-2 my-5 h-full overflow-auto">
+                {history?.map(el => (<MessageH message={el} key={el} />))}
+                {error && <ErrorMsg message={"Podrias volver a intentar, recuerda ser claro y conciso"} />}
+                <section className="w-full grid grid-cols-2 mx-2 mb-2">
+                    {Array.isArray(locations) && locations.length > 0 && locations.map((card, index) => (
+                        <Card
+                            key={index}
+                            nombre={card.name}
+                            tipo={card.type}
+                            direccion={card.address}
+                            descripcion={card.description}
+                        />
+                    ))}
+                </section>
+                <LoaderModal isOpen={isLoading} text="Cargando" />
+
+            </section>
+
+            <form onSubmit={handleSubmit} className="flex items-center justify-end border-2 mx-2 border-slate-200 rounded-md">
+                <Textarea
+                    className='w-4/5 h-fit px-1 resize-none'
+                    placeholder='Type a message...'
+                    value={prompt}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyPress}
+                />
+                <button className='w-auto h-10 mx-auto' type='submit'>
+                    <SendIcon></SendIcon>
+                </button>
+            </form>
+        </div>
+    );
 };
 
 export default Chat;

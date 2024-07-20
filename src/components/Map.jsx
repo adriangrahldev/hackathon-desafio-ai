@@ -1,9 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { AdvancedMarker, APIProvider, Map, Pin, useMap } from '@vis.gl/react-google-maps'
+import {
+  AdvancedMarker,
+  APIProvider,
+  Map,
+  Pin,
+  useMap,
+} from "@vis.gl/react-google-maps";
 
-import { MarkerClusterer } from '@googlemaps/markerclusterer'
-import { Circle } from './Circle.jsx'
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { Circle } from "./Circle.jsx";
 
 // import {main} from '../utils/modelConfig.js'
 
@@ -11,74 +17,74 @@ const center = {
   lat: -27.33056,
   lng: -55.86667,
 };
-
-const MapComponent = ({locations=[]}) => {
-    return (
-      <div className="h-full w-3/5 rounded-md">
-          <APIProvider
-            apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
-            onLoad={() => console.log("Maps API has loaded.")}
-          >
-              <Map
-                className=''
-                defaultZoom={13}
-                defaultCenter={center}
-                onCameraChanged={ev =>
-                  console.debug(
-                    "camera changed:",
-                    ev.detail.center,
-                    "zoom:",
-                    ev.detail.zoom
-                  )
-                }
-                mapId="da37f3254c6a6d1c"
-              >
-                  <PoiMarkers locations={locations}/>
-              </Map>
-          </APIProvider>
-      </div>
-    );
-}
+let errorHandler;
+const MapComponent = ({ locations = [], setErrorHandler }) => {
+  errorHandler = setErrorHandler;
+  return (
+    <div className="h-full w-4/5 rounded-md">
+      <APIProvider
+        apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+        onLoad={() => console.log("Maps API has loaded.")}
+      >
+        <Map
+          defaultZoom={13}
+          defaultCenter={center}
+          onCameraChanged={(ev) =>
+            console.debug(
+              "camera changed:",
+              ev.detail.center,
+              "zoom:",
+              ev.detail.zoom
+            )
+          }
+          mapId="da37f3254c6a6d1c"
+        >
+          <PoiMarkers locations={locations} />
+        </Map>
+      </APIProvider>
+    </div>
+  );
+};
 
 const PoiMarkers = ({ locations = [] }) => {
-  const map = useMap()
-  const [markers, setMarkers] = useState({})
-  const clusterer = useRef(null)
-  const [circleCenter, setCircleCenter] = useState(null)
-  const handleClick = useCallback(ev => {
-    if (!map) return
-    if (!ev.latLng) return
-    map.panTo(ev.latLng)
-    setCircleCenter(ev.latLng)
-  })
+  const map = useMap();
+  const [markers, setMarkers] = useState({});
+  const clusterer = useRef(null);
+  const [circleCenter, setCircleCenter] = useState(null);
+  const handleClick = useCallback((ev) => {
+    if (!map) return;
+    if (!ev.latLng) return;
+    map.panTo(ev.latLng);
+    setCircleCenter(ev.latLng);
+  });
   // Initialize MarkerClusterer, if the map has changed
   useEffect(() => {
-    if (!map) return
+    if (!map) return;
     if (!clusterer.current) {
-      clusterer.current = new MarkerClusterer({ map })
+      clusterer.current = new MarkerClusterer({ map });
     }
-  }, [map])
+  }, [map]);
 
   // Update markers, if the markers array has changed
   useEffect(() => {
-    clusterer.current?.clearMarkers()
-    clusterer.current?.addMarkers(Object.values(markers))
-  }, [markers])
+    clusterer.current?.clearMarkers();
+    clusterer.current?.addMarkers(Object.values(markers));
+  }, [markers]);
 
   const setMarkerRef = (marker, key) => {
-    if (marker && markers[key]) return
-    if (!marker && !markers[key]) return
+    if (marker && markers[key]) return;
+    if (!marker && !markers[key]) return;
 
-    setMarkers(prev => {
+    setMarkers((prev) => {
       if (marker) {
-        return { ...prev, [key]: marker }
+        return { ...prev, [key]: marker };
       } else {
-        const newMarkers = { ...prev }
-        delete newMarkers[key]
-        return newMarkers
+        const newMarkers = { ...prev };
+        delete newMarkers[key];
+        return newMarkers;
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -91,23 +97,26 @@ const PoiMarkers = ({ locations = [] }) => {
         fillColor={"#3b82f6"}
         fillOpacity={0.3}
       />
-      {locations.map(poi => (
-        <AdvancedMarker
-          title={poi.key}
-          key={poi.key}
-          position={poi.location}
-          clickable={true}
-          onClick={handleClick}
-        >
-          <Pin
-            background={'#fb5252'}
-            glyphColor={'#b02a2a'}
-            borderColor={'#000000'}
-          />
-        </AdvancedMarker>
-      ))}
+      {Array.isArray(locations) ?
+        locations.map((poi) => (
+          <AdvancedMarker
+            title={poi.key}
+            key={poi.key}
+            position={poi.location}
+            clickable={true}
+            onClick={handleClick}
+          >
+            {errorHandler(false)}
+            <Pin
+              background={"#FBBC04"}
+              glyphColor={"#1a70fd"}
+              borderColor={"#1a70fd"}
+            />
+          </AdvancedMarker>
+        ))
+        : errorHandler(true)}
     </>
-  )
-}
+  );
+};
 
 export default MapComponent;

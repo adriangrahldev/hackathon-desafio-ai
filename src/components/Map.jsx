@@ -17,9 +17,7 @@ const center = {
   lat: -27.33056,
   lng: -55.86667,
 };
-let errorHandler;
-const MapComponent = ({ locations = [], setErrorHandler }) => {
-  errorHandler = setErrorHandler;
+const MapComponent = ({ locations = []}) => {
   return (
     <div className="h-full w-3/5 rounded-md">
       <APIProvider
@@ -97,7 +95,7 @@ const PoiMarkers = ({ locations = [] }) => {
         fillColor={"#3b82f6"}
         fillOpacity={0.3}
       />
-      {Array.isArray(locations) && locations.length > 0 ?
+      {Array.isArray(locations) && locations.length > 0 &&
         locations.map((poi) => (
           <AdvancedMarker
             title={poi.key}
@@ -106,15 +104,13 @@ const PoiMarkers = ({ locations = [] }) => {
             clickable={true}
             onClick={handleClick}
           >
-            {errorHandler(false)}
             <Pin
               background={"#fb5252"}
               glyphColor={"#b02a2a"}
               borderColor={"#00000"}
             />
           </AdvancedMarker>
-        ))
-        : errorHandler(true)}
+        ))}
     </>
   );
 };

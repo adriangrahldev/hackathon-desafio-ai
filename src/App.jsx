@@ -12,7 +12,7 @@ const App = () => {
     <>
       <div className="w-full h-full m-0 p-3 bg-slate-50 flex">
         <MapComponent locations={places} setErrorHandler={setErrorHandler} className={`hidden`} />
-        <Chat setPlaces={setPlaces} error={error} locations={places} />
+        <Chat setPlaces={setPlaces} error={error} locations={places} setErrorHandler={setErrorHandler} />
       </div>
     </>
   );

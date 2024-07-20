@@ -1,12 +1,13 @@
 import { Textarea } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import generateAi from "../utils/modelConfig.js";
 import LoaderModal from "./LoaderModal.jsx";
 import Card from "./Card.jsx";
 import SendIcon from "./SendIcon.jsx";
 import MessageH from "./MessageH.jsx";
 import ErrorMsg from "./ErrorMsg.jsx";
-import { generateAi, queryChatGPTWithJsonData } from "../utils/modelConfig.js";
-const Chat = ({ setPlaces, error, locations }) => {
+
+const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
 
     const [prompt, setPrompt] = useState("");
     const [isLoading, setOnload] = useState(false);
@@ -21,8 +22,18 @@ const Chat = ({ setPlaces, error, locations }) => {
         e.preventDefault();
         console.log(prompt);
         setPrompt("");
-        setPlaces(await queryChatGPTWithJsonData(prompt))
+
+        const response = await generateAi(prompt);
+        
+        setPlaces(response)
         sethistory([...history, prompt])
+
+        if(!Array.isArray(response) || response.length === 0){
+            setErrorHandler(true)
+        }else{
+            setErrorHandler(false)
+        }
+
         setOnload(false)
     }
     const handleKeyPress = (e) => {
@@ -32,6 +43,10 @@ const Chat = ({ setPlaces, error, locations }) => {
         }
     }
 
+
+    useEffect(() => {
+      console.log('error', error)
+    }, [error])
 
     return (
         <div className='w-2/5 flex flex-col h-full'>

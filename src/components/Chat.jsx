@@ -7,7 +7,7 @@ import SendIcon from "./SendIcon.jsx";
 import MessageH from "./MessageH.jsx";
 import ErrorMsg from "./ErrorMsg.jsx";
 
-const Chat = ({ setPlaces, error }) => {
+const Chat = ({ setPlaces, error, locations }) => {
 
     const [prompt, setPrompt] = useState("");
     const [isLoading, setOnload] = useState(false);
@@ -26,14 +26,32 @@ const Chat = ({ setPlaces, error }) => {
         sethistory([...history, prompt])
         setOnload(false)
     }
-  };
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e)
+        }
+    }
+
 
     return (
-        <div className='w-1/5 flex flex-col h-full'>
+        <div className='w-2/5 flex flex-col h-full'>
             <section className="p-2 my-5 h-full overflow-auto">
                 {history?.map(el => (<MessageH message={el} key={el} />))}
                 {error && <ErrorMsg message={"Podrias volver a intentar, recuerda ser claro y conciso"} />}
+                <section className="w-full grid grid-cols-2 mx-2 mb-2">
+                    {Array.isArray(locations) && locations.length > 0 && locations.map((card, index) => (
+                        <Card
+                            key={index}
+                            nombre={card.name}
+                            tipo={card.type}
+                            direccion={card.address}
+                            descripcion={card.description}
+                        />
+                    ))}
+                </section>
                 <LoaderModal isOpen={isLoading} text="Cargando" />
+
             </section>
 
             <form onSubmit={handleSubmit} className="flex items-center justify-end border-2 mx-2 border-slate-200 rounded-md">
@@ -50,6 +68,6 @@ const Chat = ({ setPlaces, error }) => {
             </form>
         </div>
     );
-;
+};
 
 export default Chat;

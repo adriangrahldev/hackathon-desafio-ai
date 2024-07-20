@@ -21,7 +21,7 @@ let errorHandler;
 const MapComponent = ({ locations = [], setErrorHandler }) => {
   errorHandler = setErrorHandler;
   return (
-    <div className="h-full w-4/5 rounded-md">
+    <div className="h-full w-3/5 rounded-md">
       <APIProvider
         apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
         onLoad={() => console.log("Maps API has loaded.")}
@@ -97,7 +97,7 @@ const PoiMarkers = ({ locations = [] }) => {
         fillColor={"#3b82f6"}
         fillOpacity={0.3}
       />
-      {Array.isArray(locations) ?
+      {Array.isArray(locations) && locations.length>0 ?
         locations.map((poi) => (
           <AdvancedMarker
             title={poi.key}
@@ -108,9 +108,9 @@ const PoiMarkers = ({ locations = [] }) => {
           >
             {errorHandler(false)}
             <Pin
-              background={"#FBBC04"}
-              glyphColor={"#1a70fd"}
-              borderColor={"#1a70fd"}
+              background={"#fb5252"}
+              glyphColor={"#b02a2a"}
+              borderColor={"#00000"}
             />
           </AdvancedMarker>
         ))

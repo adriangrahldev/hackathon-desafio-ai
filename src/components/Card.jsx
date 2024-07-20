@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Card = ({ nombre, tipo, direccion, descripcion }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const maxLength = 100; 
+  const maxLength = 80; 
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);

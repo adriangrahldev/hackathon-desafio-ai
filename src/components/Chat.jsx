@@ -29,11 +29,7 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
         setPlaces(response)
         sethistory([...history, prompt])
 
-        if (!Array.isArray(response) || response.length === 0) {
-            setErrorHandler(true)
-        } else {
-            setErrorHandler(false)
-        }
+        setErrorHandler(!Array.isArray(response) || response.length === 0)
 
         setOnload(false)
     }

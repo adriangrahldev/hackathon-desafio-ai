@@ -13,11 +13,7 @@ import { Circle } from "./Circle.jsx";
 
 // import {main} from '../utils/modelConfig.js'
 
-const center = {
-  lat: -27.33056,
-  lng: -55.86667,
-};
-const MapComponent = ({ locations = []}) => {
+const MapComponent = ({ locations = [], center, setCenter}) => {
   return (
     <div className="h-full w-3/5 rounded-md">
       <APIProvider
@@ -27,13 +23,9 @@ const MapComponent = ({ locations = []}) => {
         <Map
           defaultZoom={13}
           defaultCenter={center}
+          center={center}
           onCameraChanged={(ev) =>
-            console.debug(
-              "camera changed:",
-              ev.detail.center,
-              "zoom:",
-              ev.detail.zoom
-            )
+            setCenter(ev.detail.center)
           }
           mapId="da37f3254c6a6d1c"
         >

@@ -7,7 +7,7 @@ import SendIcon from "./SendIcon.jsx";
 import MessageH from "./MessageH.jsx";
 import ErrorMsg from "./ErrorMsg.jsx";
 
-const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
+const Chat = ({ setPlaces, error, locations, setErrorHandler, setCenter }) => {
 
     const [prompt, setPrompt] = useState("");
     const [isLoading, setOnload] = useState(false);
@@ -61,6 +61,7 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler }) => {
                             tipo={card.type}
                             direccion={card.address}
                             descripcion={card.description}
+                            onClick={() => setCenter(card.location)}
                         />
                     ))}
                 </section>

@@ -5,17 +5,16 @@ import LoaderModal from "./LoaderModal.jsx";
 import Card from "./Card.jsx";
 import SendIcon from "./SendIcon.jsx";
 import MessageH from "./MessageH.jsx";
+import ErrorMsg from "./ErrorMsg.jsx";
 
-const Chat = ({ setPlaces }) => {
+const Chat = ({ setPlaces, error }) => {
 
     const [prompt, setPrompt] = useState("");
-    const [messageSent, setMessageSent] = useState(false);
     const [isLoading, setOnload] = useState(false);
     const [history, sethistory] = useState([])
 
     const handleChange = (e) => {
         setPrompt(e.target.value);
-        setMessageSent(false);
     };
 
     const handleSubmit = async (e) => {
@@ -23,7 +22,6 @@ const Chat = ({ setPlaces }) => {
         e.preventDefault();
         console.log(prompt);
         setPrompt("");
-        setMessageSent(true);
         setPlaces(await generateAi(prompt))
         sethistory([...history, prompt])
         setOnload(false)
@@ -39,10 +37,10 @@ const Chat = ({ setPlaces }) => {
 
     return (
         <div className='w-1/5 flex flex-col h-full'>
-            <section className="p-2 my-5 h-full">
+            <section className="p-2 my-5 h-full overflow-auto">
                 {history?.map(el => (<MessageH message={el} key={el} />))}
+                {error && <ErrorMsg message={"Podrias volver a intentar, recuerda ser claro y conciso"} />}
                 <LoaderModal isOpen={isLoading} text="Cargando" />
-
             </section>
 
             <form onSubmit={handleSubmit} className="flex items-center justify-end border-2 mx-2 border-slate-200 rounded-md">

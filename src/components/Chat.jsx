@@ -23,16 +23,12 @@ const Chat = ({ setPlaces, error, locations, setErrorHandler, setCenter }) => {
         console.log(prompt);
         setPrompt("");
 
-        const response = await generateAi(prompt);
+        const response = await queryChatGPTWithJsonData(prompt);
 
         setPlaces(response)
         sethistory([...history, prompt])
 
-        if (!Array.isArray(response) || response.length === 0) {
-            setErrorHandler(true)
-        } else {
-            setErrorHandler(false)
-        }
+        setErrorHandler(!Array.isArray(response) || response.length === 0)
 
         setOnload(false)
     }

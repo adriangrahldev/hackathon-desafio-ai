@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({ apiKey: 'sk-svcacct-0Z8ivqhEsAfF1sJD98sCT3BlbkFJAUBcdSsdaw958pmu8YWC', dangerouslyAllowBrowser: true });
+const openai = new OpenAI({ apiKey: import.meta.env.VITE_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
 async function generateAi(prompt) {
     const completion = await openai.chat.completions.create({

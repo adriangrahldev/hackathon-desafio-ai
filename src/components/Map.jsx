@@ -20,6 +20,7 @@ const MapComponent = ({locations=[]}) => {
             onLoad={() => console.log("Maps API has loaded.")}
           >
               <Map
+                className=''
                 defaultZoom={13}
                 defaultCenter={center}
                 onCameraChanged={ev =>
@@ -99,9 +100,9 @@ const PoiMarkers = ({ locations = [] }) => {
           onClick={handleClick}
         >
           <Pin
-            background={'#FBBC04'}
-            glyphColor={'#1a70fd'}
-            borderColor={'#1a70fd'}
+            background={'#fb5252'}
+            glyphColor={'#b02a2a'}
+            borderColor={'#000000'}
           />
         </AdvancedMarker>
       ))}

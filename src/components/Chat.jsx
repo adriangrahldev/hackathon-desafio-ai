@@ -39,7 +39,7 @@ const Chat = ({ setPlaces, error, locations }) => {
             <section className="p-2 my-5 h-full overflow-auto">
                 {history?.map(el => (<MessageH message={el} key={el} />))}
                 {error && <ErrorMsg message={"Podrias volver a intentar, recuerda ser claro y conciso"} />}
-                <section className="w-full grid grid-cols-2 mx-2 mb-2">
+                <section className="w-fit grid grid-cols-2 gap-2 mx-2">
                     {Array.isArray(locations) && locations.length > 0 && locations.map((card, index) => (
                         <Card
                             key={index}
